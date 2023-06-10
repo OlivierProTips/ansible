@@ -2,7 +2,7 @@
 - name: check disk space
   hosts: all
   vars:
-    - limit: 10
+    - limit: 85
   tasks:
     - name: check disk space available
       shell: df -h / | awk 'NR==2 {print $5}'
