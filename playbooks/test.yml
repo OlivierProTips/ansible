@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: pihole_servers
   become: false
   gather_facts: true
 
