@@ -19,13 +19,13 @@
     register: pihole
     when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
 
-  - name: send discord message when PiHole is update%
+  - name: send discord message when PiHole is updated
     uri:
       url: "{{ discord_webhook }}"
       method: POST
       body_format: json
-      body: '{"content": "PiHole Updated:\nPiHole: {{ pihole }} -> {{ pihole_latest }}\nLTE: {{ lte }} -> {{ lte_latest }}\nFTL: {{ FTL }} -> {{ FTL_latest }}"}'
+      body: '{"content": "PiHole Updated on {{ inventory_hostname }}:\nPiHole: {{ pihole }} -> {{ pihole_latest }}\nLTE: {{ lte }} -> {{ lte_latest }}\nFTL: {{ FTL }} -> {{ FTL_latest }}"}'
       headers:
         Content-Type: application/json
       status_code: 204
-    when: pihole == pihole_latest or lte != lte_latest or ftl != ftl_latest
+    when: pihole == pihole_latest and lte == lte_latest and ftl == ftl_latest
