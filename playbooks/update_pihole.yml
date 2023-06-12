@@ -18,3 +18,14 @@
     ansible.builtin.command: pihole -up
     register: pihole
     when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
+
+  - name: send discord message when PiHole is update%
+    uri:
+      url: "{{ discord_webhook }}"
+      method: POST
+      body_format: json
+      body: '{"content": "PiHole Updated:\nPiHole: {{ pihole }} -> {{ pihole_latest }}\nLTE: {{ lte }} -> {{ lte_latest }}\nFTL: {{ FTL }} -> {{ FTL_latest }}"}'
+      headers:
+        Content-Type: application/json
+      status_code: 204
+    when: pihole == pihole_latest or lte != lte_latest or ftl != ftl_latest
