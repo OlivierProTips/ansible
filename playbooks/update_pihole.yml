@@ -17,4 +17,4 @@
   - name: Update pihole
     ansible.builtin.command: pihole -up
     register: pihole
-    when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
+    when: pihole == pihole_latest or lte == lte_latest or ftl == ftl_latest
