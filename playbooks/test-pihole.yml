@@ -18,3 +18,4 @@
         - "version: {{ pihole }} Latest: {{ pihole_latest }}"
         - "lte: {{ lte }} Latest: {{ lte_latest }}"
         - "ftl: {{ ftl }} Latest: {{ ftl_latest }}"
+      when: pihole == pihole_latest or lte == lte_latest or ftl == ftl_latest
