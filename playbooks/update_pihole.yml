@@ -6,15 +6,15 @@
   - name: Get pihole version
     ansible.builtin.command: pihole -v
     register: pihole_version
-  - debug:
-      msg: "{{ pihole_version.stdout }}"
+  - set_fact:
+      pihole: "{{ pihole_version.stdout | regex_search('Pi-hole version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+      pihole_latest: "{{ pihole_version.stdout | regex_search('Pi-hole version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+      lte: "{{ pihole_version.stdout | regex_search('AdminLTE version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+      lte_latest: "{{ pihole_version.stdout | regex_search('AdminLTE version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+      ftl: "{{ pihole_version.stdout | regex_search('FTL version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+      ftl_latest: "{{ pihole_version.stdout | regex_search('FTL version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
 
   - name: Update pihole
     ansible.builtin.command: pihole -up
     register: pihole
-    
-  - name: Get pihole version
-    ansible.builtin.command: pihole -v
-    register: pihole_version
-  - debug:
-      msg: "{{ pihole_version.stdout }}"
+    when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
