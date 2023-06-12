@@ -8,12 +8,12 @@
     register: pihole_version
   - name: Set variables
     set_fact:
-      pihole: "{{ pihole_version.stdout | regex_search('Pi-hole version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
-      pihole_latest: "{{ pihole_version.stdout | regex_search(Pi-hole version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
-      lte: "{{ pihole_version.stdout | regex_search(AdminLTE version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
-      lte_latest: "{{ pihole_version.stdout | regex_search(AdminLTE version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
-      ftl: "{{ pihole_version.stdout | regex_search(FTL version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
-      ftl_latest: "{{ pihole_version.stdout | regex_search(FTL version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+      pihole: "{{ pihole_version.stdout | regex_search('Pi-hole version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
+      pihole_latest: "{{ pihole_version.stdout | regex_search(Pi-hole version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
+      lte: "{{ pihole_version.stdout | regex_search(AdminLTE version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
+      lte_latest: "{{ pihole_version.stdout | regex_search(AdminLTE version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
+      ftl: "{{ pihole_version.stdout | regex_search(FTL version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
+      ftl_latest: "{{ pihole_version.stdout | regex_search(FTL version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
   - debug:
       msg:
         - "version: {{ pihole }} Latest: {{ pihole_latest }}"
