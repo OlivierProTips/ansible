@@ -4,4 +4,4 @@
 
   tasks:
   - name: execute script
-    script: test.py
+    script: scripts/test.py
