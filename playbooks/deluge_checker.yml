@@ -3,17 +3,17 @@
   hosts: docker
   become: false
   tasks:
-    - name: Exécuter la commande curl
+    - name: Launch curl on deluge url (check http 200)
       command: >
         curl -s --connect-timeout 10 --max-time 30 --retry-connrefused --retry-all-errors --fail --retry 5 --retry-delay 5 --retry-max-time 10 {{ deluge_url }}
       register: curl_output
       ignore_errors: yes
 
-    - name: Obtenir l'état de santé de gluetun
+    - name: Get gluetun health check
       shell: docker inspect gluetun | jq -r '.[].State.Health.Status'
       register: gluetun_health
       when: curl_output is failed
 
-    - name: Redémarrer le conteneur Docker deluge
+    - name: Restart deluge
       command: docker restart deluge
       when: curl_output is failed and gluetun_health.stdout == "healthy"
