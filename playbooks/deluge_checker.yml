@@ -15,5 +15,5 @@
       # when: curl_output is failed
 
     - name: Restart deluge
-      command: COMPOSE_FILE={{ deluge_compose_file }} docker compose down && COMPOSE_FILE={{ deluge_compose_file }} docker compose up -d
+      command: COMPOSE_FILE={{ deluge_compose_file }} && docker compose down && docker compose up -d
       when: curl_output is failed or gluetun_health.stdout != "healthy"
