@@ -78,7 +78,7 @@
         insertafter: EOF
         dest: "{{ item }}"
         content: |
-          - alias ll='ls -lah --color'
+          alias ll='ls -lah --color'
       with_items:
         - /home/{{ debian_user }}/.bashrc
         - /root/.bashrc
