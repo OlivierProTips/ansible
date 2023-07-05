@@ -4,6 +4,7 @@
   become: true
   tasks:
     - name: Install packages
+      become_method: su
       apt:
         name: 
           - ncdu
