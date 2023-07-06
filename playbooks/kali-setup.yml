@@ -1,10 +1,9 @@
 ---
 - hosts: kali
 
-  become: true
-
   tasks:
     - name: Update and upgrade apt packages
+      become: true
       apt:
         upgrade: yes
         update_cache: yes
@@ -19,5 +18,31 @@
       when: ansible_architecture != 'aarch64' and ansible_architecture != 'arm64'
 
     - name: Install VSCode
+      become: true
       apt:
         deb: /tmp/vscode.deb
+
+    - name: Install packages
+      become: true
+      apt:
+        name: 
+          - ncdu
+          - terminator
+          - seclists
+          - feroxbuster
+          - gobuster
+        state: present
+
+    - name: Create terminator config folder
+      file:
+        path: {{ lookup('env','HOME') }}/.config/terminator
+        state: directory
+
+    - name: Copy terminator config file
+      copy:
+        src: terminator_config
+        dest: {{ lookup('env','HOME') }}/.config/terminator/config
+
+    - name: Unpack rockyou
+      become: true
+      shell: gunzip -d /usr/share/wordlists/rockyou.txt.gz
