@@ -4,20 +4,12 @@
   become: true
 
   tasks:
-    - name: Update apt packages
-      become: true
-      apt:
-        update_cache: yes
-        cache_valid_time: 86400 #One day
-
-    - name: Wait for sudo
-      become: yes
-      shell:  while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
-
-    - name: Upgrade apt packages
+    - name: Update and upgrade apt packages
       become: true
       apt:
         upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
 
     - name: Download arm vscode
       get_url: url=https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64 dest=/tmp/vscode.deb
