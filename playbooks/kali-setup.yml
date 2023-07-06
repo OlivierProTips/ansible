@@ -12,11 +12,11 @@
 
     - name: Download arm vscode
       get_url: url=https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64 dest=/tmp/vscode.deb
-      when: ansible_architecture == aarch64 OR ansible_architecture == arm64
+      when: ansible_architecture == aarch64 or ansible_architecture == arm64
 
     - name: Download x64 vscode
       get_url: url=https://code.visualstudio.com/sha/download?build=stable&os=x64 dest=/tmp/vscode.deb
-      when: ansible_architecture != aarch64 AND ansible_architecture != arm64
+      when: ansible_architecture != aarch64 and ansible_architecture != arm64
 
     - name: Install VSCode
       apt:
