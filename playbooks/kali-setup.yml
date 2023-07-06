@@ -35,13 +35,13 @@
 
     - name: Create terminator config folder
       file:
-        path: {{ lookup('env','HOME') }}/.config/terminator
+        path: "{{ lookup('env','HOME') }}/.config/terminator"
         state: directory
 
     - name: Copy terminator config file
       copy:
-        src: terminator_config
-        dest: {{ lookup('env','HOME') }}/.config/terminator/config
+        src: "terminator_config"
+        dest: "{{ lookup('env','HOME') }}/.config/terminator/config"
 
     - name: Unpack rockyou
       become: true
