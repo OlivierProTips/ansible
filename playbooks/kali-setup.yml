@@ -46,3 +46,4 @@
     - name: Unpack rockyou
       become: true
       shell: gunzip -d /usr/share/wordlists/rockyou.txt.gz
+      ignore_errors: yes
