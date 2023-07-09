@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  become: true
+  tasks:
+    - name: apt install some apps
+      apt:
+        name: 
+          - ncdu
+          - borgbackup
+          - borgmatic
+        state: present
