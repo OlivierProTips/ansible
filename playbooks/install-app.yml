@@ -8,5 +8,17 @@
         name: 
           - ncdu
           - borgbackup
+          - python3-pip
+        state: present
+
+    - name: apt remove some apps
+      apt:
+        name: 
+          - borgmatic
+        state: absent
+
+    - name: pip install some apps
+      pip:
+        name:
           - borgmatic
         state: present
