@@ -13,5 +13,5 @@
       lineinfile: 
         path: /usr/local/bin/discorder 
         regexp: '^(discord_webhook_url = ).*$' 
-        line: '\1{{ discorder_webhook }}'
+        line: '\1"{{ discorder_webhook }}"'
         backrefs: yes
