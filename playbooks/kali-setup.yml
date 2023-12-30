@@ -2,6 +2,7 @@
 - hosts: kali
 
   become: true
+  become_method: sudo
 
   tasks:
     - name: Update apt packages
