@@ -10,22 +10,22 @@
   - set_fact:
       pihole: "{{ pihole_version.stdout | regex_search('Pi-hole version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
       pihole_latest: "{{ pihole_version.stdout | regex_search('Pi-hole version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
-      lte: "{{ pihole_version.stdout | regex_search('web version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
-      lte_latest: "{{ pihole_version.stdout | regex_search('web version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+      web: "{{ pihole_version.stdout | regex_search('web version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+      web_latest: "{{ pihole_version.stdout | regex_search('web version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
       ftl: "{{ pihole_version.stdout | regex_search('FTL version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
       ftl_latest: "{{ pihole_version.stdout | regex_search('FTL version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
 
   - name: Update pihole
     ansible.builtin.command: pihole -up
-    when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
+    when: pihole != pihole_latest or web != web_latest or ftl != ftl_latest
 
   - name: send discord message when PiHole is updated
     uri:
       url: "{{ discord_webhook }}"
       method: POST
       body_format: json
-      body: '{"content": "PiHole Updated on {{ inventory_hostname }}:\nPiHole: {{ pihole }} 👉 {{ pihole_latest }}\nLTE: {{ lte }} 👉 {{ lte_latest }}\nFTL: {{ ftl }} 👉 {{ ftl_latest }}"}'
+      body: '{"content": "PiHole Updated on {{ inventory_hostname }}:\nPiHole: {{ pihole }} 👉 {{ pihole_latest }}\nweb: {{ web }} 👉 {{ web_latest }}\nFTL: {{ ftl }} 👉 {{ ftl_latest }}"}'
       headers:
         Content-Type: application/json
       status_code: 204
-    when: pihole != pihole_latest or lte != lte_latest or ftl != ftl_latest
+    when: pihole != pihole_latest or web != web_latest or ftl != ftl_latest
