@@ -6,4 +6,4 @@
     - name: apt install ncdu
       apt:
         name: ncdu
-        state: yes
+        state: present
