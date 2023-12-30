@@ -3,8 +3,18 @@
   become: true
 
   tasks:
+  - name: Get pihole version
+    ansible.builtin.command: pihole -v
+    register: pihole_version
+  - debug:
+      msg: "{{ pihole_version.stdout }}"
+
   - name: Update pihole
     ansible.builtin.command: pihole -up
     register: pihole
+    
+  - name: Get pihole version
+    ansible.builtin.command: pihole -v
+    register: pihole_version
   - debug:
-      msg: "{{ pihole.stdout }}"
+      msg: "{{ pihole_version.stdout }}"
