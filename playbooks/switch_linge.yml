@@ -1,0 +1,7 @@
+---
+- name: Switch linge
+  hosts: docker
+  become: false
+  tasks:
+    - name: Switch linge
+      shell: {{ linge_switch_script }}
