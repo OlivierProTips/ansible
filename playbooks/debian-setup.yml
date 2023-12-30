@@ -5,6 +5,7 @@
   tasks:
     - name: Install packages
       become_method: su
+      become_user: root
       apt:
         name: 
           - ncdu
