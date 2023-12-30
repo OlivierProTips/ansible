@@ -5,7 +5,7 @@
   tasks:
     - name: Launch curl on deluge url (check http 200)
       command: >
-        curl -s --connect-timeout 30 --max-time 30 --retry-connrefused --retry-all-errors --fail --retry 1 --retry-delay 5 --retry-max-time 120 {{ deluge_url }}
+        curl -s --connect-timeout 30 --max-time 30 --retry-connrefused --retry-all-errors --fail --retry 10 --retry-delay 5 --retry-max-time 120 {{ deluge_url }}
       register: curl_output
       ignore_errors: yes
 
