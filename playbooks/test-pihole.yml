@@ -7,12 +7,12 @@
     ansible.builtin.command: pihole -v
     register: pihole_version
   - set_fact:
-    version: "{{ pihole.stdout | regex_search('Pi-hole version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
-    version_latest: "{{ pihole.stdout | regex_search(Pi-hole version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
-    lte: "{{ pihole.stdout | regex_search(AdminLTE version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
-    lte_latest: "{{ pihole.stdout | regex_search(AdminLTE version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
-    ftl: "{{ pihole.stdout | regex_search(FTL version is v(.*) \(Latest: v.*\)', '\\1', multiline=true) | first }}"
-    ftl_latest: "{{ pihole.stdout | regex_search(FTL version is v.* \(Latest: v(.*)\)', '\\1', multiline=true) | first }}"
+    version: "{{ pihole.stdout | regex_search('Pi-hole version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+    version_latest: "{{ pihole.stdout | regex_search(Pi-hole version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+    lte: "{{ pihole.stdout | regex_search(AdminLTE version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+    lte_latest: "{{ pihole.stdout | regex_search(AdminLTE version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
+    ftl: "{{ pihole.stdout | regex_search(FTL version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
+    ftl_latest: "{{ pihole.stdout | regex_search(FTL version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
   - debug:
     msg: |
     "version: {{ version }} Latest: {{ version_latest }}"
