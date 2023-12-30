@@ -15,7 +15,7 @@
       ftl: "{{ pihole_version.stdout | regex_search(FTL version is v(.*) \\(Latest: v.*\\)', '\\1', multiline=true) | first }}"
       ftl_latest: "{{ pihole_version.stdout | regex_search(FTL version is v.* \\(Latest: v(.*)\\)', '\\1', multiline=true) | first }}"
   - debug:
-    msg:
-      - "version: {{ pihole }} Latest: {{ pihole_latest }}"
-      - "lte: {{ lte }} Latest: {{ lte_latest }}"
-      - "ftl: {{ ftl }} Latest: {{ ftl_latest }}"
+      msg:
+        - "version: {{ pihole }} Latest: {{ pihole_latest }}"
+        - "lte: {{ lte }} Latest: {{ lte_latest }}"
+        - "ftl: {{ ftl }} Latest: {{ ftl_latest }}"
