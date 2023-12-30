@@ -1,0 +1,75 @@
+---
+- hosts: debiantest
+
+  become: true
+  tasks:
+    - name: Install packages
+      apt:
+        name: 
+          - ncdu
+          - git
+          - vim
+          - htop
+          - sudo
+          - wget
+          - nfs-common
+          - ncdu
+          - autofs
+        state: present
+
+    - name: Install mail packages
+      apt:
+        name: 
+          - msmtp-mta
+          - bsd-mailx
+        state: present
+
+    - name: Configure mail server
+      copy:
+        dest: "/etc/msmtprc"
+        mode: 0644
+        # owner: root
+        content: |
+          # Set default values for all following accounts.
+          defaults
+          port 587
+          tls on
+          tls_trust_file /etc/ssl/certs/ca-certificates.crt
+          logfile -
+
+          account mailserver
+          host {{ debian_smtp_host }}
+          from {{ debian_smtp_user }}
+          auth on
+          user {{ debian_smtp_user }}
+          password {{ debian_smtp_password }}
+
+          # Set a default account
+          account default : mailserver
+
+    - name: Add user to sudoers
+      shell: adduser {{ debian_user }} sudo
+
+    - name: Setting VIM
+      copy:
+        dest: "{{ item }}"
+        content: |
+          source $VIMRUNTIME/defaults.vim
+          set mouse-=a
+      with_items:
+        - /home/{{ debian_user }}/.vimrc
+        - /root/.vimrc
+
+    - name: Add aliases
+      blockinfile: 
+        state: present
+        insertafter: EOF
+        dest: "{{ item }}"
+        content: |
+          - alias ll='ls -lah --color'
+      with_items:
+        - /home/{{ debian_user }}/.bashrc
+        - /root/.bashrc
+
+    - name: Chown all user folders
+      shell: chown -R {{ debian_user }}:{{ debian_user }} /home/{{ debian_user }}
