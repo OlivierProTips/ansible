@@ -22,7 +22,6 @@
           - sudo
           - wget
           - nfs-common
-          - ncdu
           - autofs
         state: present
 
