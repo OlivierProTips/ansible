@@ -12,8 +12,8 @@
     - name: Get gluetun health check
       shell: docker inspect {{ gluetun_ct_name }} | jq -r '.[].State.Health.Status'
       register: gluetun_health
-      when: curl_output is failed
+      # when: curl_output is failed
 
     - name: Restart deluge
-      command: docker restart {{ deluge_ct_name }}
-      when: curl_output is failed and gluetun_health.stdout == "healthy"
+      command: docker compose down && docker compose up -d -f {{ deluge_compose_file }}
+      when: curl_output is failed or gluetun_health.stdout != "healthy"
