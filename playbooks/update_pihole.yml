@@ -5,3 +5,5 @@
   tasks:
   - name: Update pihole
     ansible.builtin.command: pihole -up
+    debug:
+      msg: stdout
