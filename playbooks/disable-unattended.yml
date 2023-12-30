@@ -1,0 +1,10 @@
+---
+- hosts: all
+
+  become: true
+  tasks:
+    - name: disable unattended
+      systemd:
+        name: unattended-upgrades
+        state: stopped
+        enabled: no
