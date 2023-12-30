@@ -1,9 +1,0 @@
----
-- hosts: all
-
-  become: true
-  tasks:
-    - name: apt install ncdu
-      apt:
-        name: ncdu
-        state: present
