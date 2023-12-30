@@ -1,4 +1,5 @@
 ---
+# 0 */6 * * *
 - name: check disk space
   hosts: all
   vars:
