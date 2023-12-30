@@ -15,3 +15,14 @@
         regexp: '^(discord_webhook_url = ).*$' 
         line: '\1"{{ discorder_webhook }}"'
         backrefs: yes
+
+    - name: Add path variable in user crontab
+      become: false
+      cronvar:
+        name: "PATH"
+        value: "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+
+    - name: Add path variable in root crontab
+      cronvar:
+        name: "PATH"
+        value: "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
