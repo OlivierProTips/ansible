@@ -5,5 +5,5 @@
 
   tasks:
   - name: Show hostname
-    debug:
+    debugss:
       msg: "Host: {{ ansible_hostname }} FQDN: {{ ansible_nodename }}"
