@@ -10,10 +10,10 @@
       ignore_errors: yes
 
     - name: Get gluetun health check
-      shell: docker inspect gluetun | jq -r '.[].State.Health.Status'
+      shell: docker inspect {{ gluetun_ct_name }} | jq -r '.[].State.Health.Status'
       register: gluetun_health
       when: curl_output is failed
 
     - name: Restart deluge
-      command: docker restart deluge
+      command: docker restart {{ deluge_ct_name }}
       when: curl_output is failed and gluetun_health.stdout == "healthy"
