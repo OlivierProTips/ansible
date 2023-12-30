@@ -28,4 +28,4 @@
       headers:
         Content-Type: application/json
       status_code: 204
-    when: pihole == pihole_latest
+    when: pihole != pihole_latest
