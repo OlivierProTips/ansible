@@ -2,7 +2,7 @@
 - name: check disk space
   hosts: all
   vars:
-      limit: 10
+    - limit: 10
   tasks:
     - name: get disk usage
       command: df -h
@@ -19,4 +19,4 @@
         headers:
           Content-Type: application/json
         status_code: 204
-      when: disk_usage.stdout[:-1]|int > {{ limit }}
+      when: disk_usage.stdout[:-1]|int > limit
