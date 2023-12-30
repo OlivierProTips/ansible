@@ -24,7 +24,7 @@
       url: "{{ discord_webhook }}"
       method: POST
       body_format: json
-      body: '{"content": "PiHole Updated on {{ inventory_hostname }}:\\nPiHole: {{ pihole }} -> {{ pihole_latest }}\\nLTE: {{ lte }} -> {{ lte_latest }}\\nFTL: {{ FTL }} -> {{ FTL_latest }}"}'
+      body: '{"content": "PiHole Updated on {{ inventory_hostname }}:\nPiHole: {{ pihole }} -> {{ pihole_latest }}\nLTE: {{ lte }} -> {{ lte_latest }}\nFTL: {{ ftl }} -> {{ ftl_latest }}"}'
       headers:
         Content-Type: application/json
       status_code: 204
