@@ -11,7 +11,7 @@
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400 #One day
-        
+
     - name: Install packages
       apt:
         name: 
@@ -57,7 +57,10 @@
           account default : mailserver
 
     - name: Add user to sudoers
-      shell: adduser {{ debian_user }} sudo
+      user:
+        name: '{{ debian_user }}'
+        groups: sudo
+        append: yes
 
     - name: Setting VIM
       copy:
