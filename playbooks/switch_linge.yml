@@ -4,4 +4,4 @@
   become: false
   tasks:
     - name: Switch linge
-      shell: {{ linge_switch_script }}
+      shell: /bin/bash {{ linge_switch_script }}
