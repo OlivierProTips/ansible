@@ -1,7 +1,6 @@
 ---
 - hosts: docker
 
-  become: true
   tasks:
     # - name: Get Discorder
     #   get_url: 
