@@ -11,5 +11,6 @@
 
     - name: Add token
       copy: 
+        owner: "{{ debian_user }}"
         dest: /home/{{ debian_user }}/.local/discorder.token
         content: "{{ discorder_webhook }}"
