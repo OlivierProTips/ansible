@@ -2,14 +2,14 @@
 - hosts: docker
 
   tasks:
-    # - name: Get Discorder
-    #   get_url: 
-    #     url: "https://gist.githubusercontent.com/OlivierProTips/fd3f645e9bed6073be01f244d3e8ef7f/raw/" 
-    #     dest: "/usr/local/bin/discorder"
-    #     mode: "+x"
+    - name: Get Discorder
+      become: true
+      get_url: 
+        url: "https://gist.githubusercontent.com/OlivierProTips/fd3f645e9bed6073be01f244d3e8ef7f/raw/" 
+        dest: "/usr/local/bin/discorder"
+        mode: "+x"
 
     - name: Add token
       copy: 
-        owner: "{{ debian_user }}"
         dest: /home/{{ debian_user }}/.local/discorder.token
         content: "{{ discorder_webhook }}"
