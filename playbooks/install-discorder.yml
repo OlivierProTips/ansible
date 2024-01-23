@@ -11,7 +11,7 @@
 
     - name: Create .local
       file: 
-        mode: 0775
+        mode: 0755
         path: /home/{{ debian_user }}/.local
         state: directory
 
