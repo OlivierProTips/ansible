@@ -3,15 +3,14 @@
 
   become: true
   tasks:
-    - name: Get Discorder
-      get_url: 
-        url: "https://gist.githubusercontent.com/OlivierProTips/fd3f645e9bed6073be01f244d3e8ef7f/raw/" 
-        dest: "/usr/local/bin/discorder"
-        mode: "+x"
+    # - name: Get Discorder
+    #   get_url: 
+    #     url: "https://gist.githubusercontent.com/OlivierProTips/fd3f645e9bed6073be01f244d3e8ef7f/raw/" 
+    #     dest: "/usr/local/bin/discorder"
+    #     mode: "+x"
 
     - name: Add token
-      lineinfile: 
-        path: /usr/local/bin/discorder 
-        regexp: '^(discord_webhook_url = ).*$' 
-        line: '\1"{{ discorder_webhook }}"'
-        backrefs: yes
+      copy: 
+        create: true
+        dest: /home/{{ debian_user }}/.local/discorder.token
+        content: "{{ discorder_webhook }}"
