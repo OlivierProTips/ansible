@@ -11,6 +11,5 @@
 
     - name: Add token
       copy: 
-        create: true
         dest: /home/{{ debian_user }}/.local/discorder.token
         content: "{{ discorder_webhook }}"
