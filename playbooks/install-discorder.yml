@@ -9,6 +9,12 @@
         dest: "/usr/local/bin/discorder"
         mode: "+x"
 
+    - name: Create .local
+      file: 
+        mode: 755
+        path: /home/{{ debian_user }}/.local
+        state: directory
+
     - name: Add token
       copy: 
         dest: /home/{{ debian_user }}/.local/discorder.token
