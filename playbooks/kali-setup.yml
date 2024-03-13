@@ -2,7 +2,7 @@
 - hosts: localhost
 
   vars:
-    kali-resources-path: https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/
+    kali-resources-path: "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/"
 
   tasks:
 
