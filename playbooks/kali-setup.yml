@@ -2,7 +2,7 @@
 - hosts: localhost
 
   vars:
-    kali-resources-path: "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/"
+    kali_resources_path: "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/"
 
   tasks:
 
@@ -75,7 +75,7 @@
 
     - name: Copy terminator config file
       get_url:
-        url: "{{ kali-resources-path }}terminator_config"
+        url: "{{ kali_resources_path }}terminator_config"
         dest: "~/.config/terminator/config"
 
     - name: Unpack rockyou
@@ -85,7 +85,7 @@
 
     - name: Copy aliases
       get_url:
-        url: "{{ kali-resources-path }}.aliases"
+        url: "{{ kali_resources_path }}.aliases"
         dest: "~"
 
     - name: Load aliases in .zshrc
@@ -125,11 +125,11 @@
         dest: "/usr/local/bin/"
         mode: "+x"
       with_items:
-        - "{{ kali-resources-path }}upload"
-        - "{{ kali-resources-path }}monip"
-        - "{{ kali-resources-path }}nmaper"
-        - "{{ kali-resources-path }}vpnchoice"
-        - "{{ kali-resources-path }}dnsmasq-update"
+        - "{{ kali_resources_path }}upload"
+        - "{{ kali_resources_path }}monip"
+        - "{{ kali_resources_path }}nmaper"
+        - "{{ kali_resources_path }}vpnchoice"
+        - "{{ kali_resources_path }}dnsmasq-update"
 
     - name: Create vpnchoice folder
       file:
@@ -166,9 +166,9 @@
         dest: "{{ user_desktop.stdout }}"
         mode: "+x"
       with_items:
-        - "{{ kali-resources-path }}medium.sh"
-        - "{{ kali-resources-path }}high.sh"
-        - "{{ kali-resources-path }}auto.sh"
+        - "{{ kali_resources_path }}medium.sh"
+        - "{{ kali_resources_path }}high.sh"
+        - "{{ kali_resources_path }}auto.sh"
       when: virt_env.stdout == "qemu" or virt_env.stdout == "vmware"
 
     - name: Install ligolo-ng
