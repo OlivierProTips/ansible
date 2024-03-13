@@ -1,6 +1,9 @@
 ---
 - hosts: localhost
 
+  vars:
+    kali-resources-path: https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/
+
   tasks:
 
     - name: Get user name
@@ -72,7 +75,7 @@
 
     - name: Copy terminator config file
       get_url:
-        url: "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/terminator_config"
+        url: "{{ kali-resources-path }}terminator_config"
         dest: "~/.config/terminator/config"
 
     - name: Unpack rockyou
@@ -82,7 +85,7 @@
 
     - name: Copy aliases
       get_url:
-        url: "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/.aliases"
+        url: "{{ kali-resources-path }}.aliases"
         dest: "~"
 
     - name: Load aliases in .zshrc
@@ -122,11 +125,11 @@
         dest: "/usr/local/bin/"
         mode: "+x"
       with_items:
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/upload"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/monip"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/nmaper"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/vpnchoice"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/dnsmasq-update"
+        - "{{ kali-resources-path }}upload"
+        - "{{ kali-resources-path }}monip"
+        - "{{ kali-resources-path }}nmaper"
+        - "{{ kali-resources-path }}vpnchoice"
+        - "{{ kali-resources-path }}dnsmasq-update"
 
     - name: Create vpnchoice folder
       file:
@@ -163,9 +166,9 @@
         dest: "{{ user_desktop.stdout }}"
         mode: "+x"
       with_items:
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/medium.sh"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/high.sh"
-        - "https://raw.githubusercontent.com/OlivierProTips/kali-resources/master/auto.sh"
+        - "{{ kali-resources-path }}medium.sh"
+        - "{{ kali-resources-path }}high.sh"
+        - "{{ kali-resources-path }}auto.sh"
       when: virt_env.stdout == "qemu" or virt_env.stdout == "vmware"
 
     - name: Install ligolo-ng
