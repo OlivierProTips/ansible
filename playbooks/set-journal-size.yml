@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  become: true
+  tasks:
+    - name: Set SystemMaxUse for journald
+      blockinfile:
+        create: yes
+        dest: "/etc/systemd/journald.conf.d/00-journal-size.conf"
+        content: |
+          [Journal]
+          SystemMaxUse=200M
