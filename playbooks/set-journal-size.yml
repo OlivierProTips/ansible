@@ -10,3 +10,8 @@
         content: |
           [Journal]
           SystemMaxUse=200M
+    - name: restart journald
+      systemd:
+        name: systemd-journald
+        state: restarted
+        enabled: no
