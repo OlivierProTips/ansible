@@ -1,8 +1,6 @@
-playbooks/msmtprc
+playbooks/msmtprc*
 playbooks/hosts.ini
-playbooks/update_msmtprc.yaml
-playbooks/msmtprc.old
-playbooks/update_msmtprc.old.yaml
+playbooks/update_msmtprc*
 playbooks/aliases
 .vscode
 logs
