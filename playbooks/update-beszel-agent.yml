@@ -1,0 +1,7 @@
+# 0 5 * * *
+- name: Update Beszel Agent
+  hosts: all
+  become: true
+  tasks:
+    - name: Update Beszel Agent
+      shell: /opt/beszel-agent/beszel-agent update && systemctl restart beszel-agent
