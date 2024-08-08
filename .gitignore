@@ -1,0 +1,8 @@
+playbooks/msmtprc
+playbooks/hosts.ini
+playbooks/update_msmtprc.yaml
+playbooks/msmtprc.old
+playbooks/update_msmtprc.old.yaml
+playbooks/aliases
+.vscode
+logs

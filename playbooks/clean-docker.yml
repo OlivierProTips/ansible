@@ -1,7 +1,9 @@
 ---
 # 0 5 * * 0
 - name: clean docker
-  hosts: docker
+  hosts: 
+    - docker
+    - publicproxy
   tasks:
     - name: prune non-dangling images
       community.docker.docker_prune:
