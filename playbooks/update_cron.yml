@@ -1,0 +1,14 @@
+---
+- hosts: cron
+  tasks:
+    - name: Git pull
+      shell: |
+        cd /home/olivier/cronserver
+        git pull
+
+    - name: Update cron
+      become: true
+      shell: |
+        cd /home/olivier/cronserver/cron
+        bash update_cron.sh
+        
