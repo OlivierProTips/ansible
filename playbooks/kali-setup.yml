@@ -101,11 +101,11 @@
         dest: "~/.zshrc"
         line: 'export PATH="$PATH:/home/{{ user_name.stdout }}/.local/bin"'
 
-    - name: Install pipx / pwncat-cs
+    - name: Install pipx / penelope
       shell: |
         python3 -m pip install --user pipx
         export PATH="$PATH:/home/{{ user_name.stdout }}/.local/bin"
-        pipx install pwncat-cs
+        pipx install git+https://github.com/brightio/penelope
 
     - name: Setting VIM
       become: true
