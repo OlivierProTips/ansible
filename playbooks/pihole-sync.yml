@@ -16,6 +16,11 @@
         return_content: yes
       register: auth_pihole_master
 
+    - name: Vérification de l'authentification sur PiHole Master
+      fail:
+        msg: "Authentification sur PiHole Master échouée : {{ auth_pihole_master.content }}"
+      when: auth_pihole_master.json is not defined or 'sid' not in auth_pihole_master.json
+
     - name: Récupération des données depuis PiHole Master
       uri:
         url: "{{ pihole_master }}/api/teleporter"
@@ -44,6 +49,11 @@
           password: "{{ pihole_slave_1_password }}"
         return_content: yes
       register: auth_pihole_slave_1
+
+    - name: Vérification de l'authentification sur PiHole Slave 1
+      fail:
+        msg: "Authentification sur PiHole Slave 1 échouée : {{ auth_pihole_slave_1.content }}"
+      when: auth_pihole_slave_1.json is not defined or 'sid' not in auth_pihole_slave_1.json
 
     - name: Envoi du fichier vers PiHole Slave 1
       uri:
