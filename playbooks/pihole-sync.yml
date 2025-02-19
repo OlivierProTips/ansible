@@ -1,6 +1,6 @@
 ---
 - name: Transférer les données entre deux Pi-hole
-  hosts: localhost
+  hosts: cron
   gather_facts: no
   tasks:
     - name: Authentification sur PiHole Master
