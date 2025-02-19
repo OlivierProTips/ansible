@@ -26,7 +26,7 @@
     - name: Vérification de l'authentification sur PiHole Master
       fail:
         msg: "Authentification échouée. Réponse API: {{ auth_pihole_master }}"
-      when: auth_pihole_master.failed or auth_pihole_master.json is not defined or 'sid' not in auth_pihole_master.json
+      when: auth_pihole_master.failed or auth_pihole_master.json is not defined or auth_pihole_master.json.session is not defined or 'sid' not in auth_pihole_master.json.session
 
     - name: Récupération des données depuis PiHole Master
       uri:
@@ -75,7 +75,7 @@
     - name: Vérification de l'authentification sur PiHole Slave 1
       fail:
         msg: "Authentification échouée. Réponse API: {{ auth_pihole_slave_1 }}"
-      when: auth_pihole_slave_1.failed or auth_pihole_slave_1.json is not defined or 'sid' not in auth_pihole_slave_1.json
+      when: auth_pihole_slave_1.failed or auth_pihole_slave_1.json is not defined or auth_pihole_slave_1.json.session is not defined or 'sid' not in auth_pihole_slave_1.json.session
 
     - name: Envoi du fichier vers PiHole Slave 1
       uri:
