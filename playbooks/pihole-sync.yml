@@ -1,6 +1,6 @@
 ---
 - name: Transférer les données entre deux Pi-hole
-  hosts: localhost
+  hosts: cron
   gather_facts: no
   tasks:
     - name: Authentification sur PiHole Master
@@ -14,16 +14,18 @@
         body:
           password: "{{ pihole_master_password }}"
         return_content: yes
+        status_code: [200, 201]
       register: auth_pihole_master
+      ignore_errors: yes
 
-    - name: Debug réponse Auth PiHole Master
+    - name: Debug réponse brute Auth PiHole Master
       debug:
-        var: auth_pihole_master.json
+        var: auth_pihole_master
 
     - name: Vérification de l'authentification sur PiHole Master
       fail:
-        msg: "Authentification sur PiHole Master échouée : {{ auth_pihole_master.json }}"
-      when: auth_pihole_master.json is not defined or 'sid' not in auth_pihole_master.json
+        msg: "Authentification échouée. Réponse API: {{ auth_pihole_master }}"
+      when: auth_pihole_master.failed or auth_pihole_master.json is not defined or 'sid' not in auth_pihole_master.json
 
     - name: Récupération des données depuis PiHole Master
       uri:
@@ -34,6 +36,12 @@
           sid: "{{ auth_pihole_master.json.sid }}"
         return_content: yes
       register: teleporter_data
+      ignore_errors: yes
+
+    - name: Vérification de la récupération des données
+      fail:
+        msg: "Échec du téléchargement. Réponse API: {{ teleporter_data }}"
+      when: teleporter_data.failed
 
     - name: Sauvegarde du fichier téléchargé
       copy:
@@ -52,16 +60,18 @@
         body:
           password: "{{ pihole_slave_1_password }}"
         return_content: yes
+        status_code: [200, 201]
       register: auth_pihole_slave_1
+      ignore_errors: yes
 
-    - name: Debug réponse Auth PiHole Slave 1
+    - name: Debug réponse brute Auth PiHole Slave 1
       debug:
-        var: auth_pihole_slave_1.json
+        var: auth_pihole_slave_1
 
     - name: Vérification de l'authentification sur PiHole Slave 1
       fail:
-        msg: "Authentification sur PiHole Slave 1 échouée : {{ auth_pihole_slave_1.json }}"
-      when: auth_pihole_slave_1.json is not defined or 'sid' not in auth_pihole_slave_1.json
+        msg: "Authentification échouée. Réponse API: {{ auth_pihole_slave_1 }}"
+      when: auth_pihole_slave_1.failed or auth_pihole_slave_1.json is not defined or 'sid' not in auth_pihole_slave_1.json
 
     - name: Envoi du fichier vers PiHole Slave 1
       uri:
@@ -74,6 +84,12 @@
         src: "/tmp/teleporter.zip"
         return_content: yes
       register: upload_result
+      ignore_errors: yes
+
+    - name: Vérification de l'envoi des données
+      fail:
+        msg: "Échec de l'envoi. Réponse API: {{ upload_result }}"
+      when: upload_result.failed
 
     - name: Afficher le résultat de l'envoi
       debug:
