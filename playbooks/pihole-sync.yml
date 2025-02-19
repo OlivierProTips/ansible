@@ -17,6 +17,7 @@
         status_code: [200, 201]
       register: auth_pihole_master
       ignore_errors: yes
+      check_mode: no
 
     - name: Debug réponse brute Auth PiHole Master
       debug:
@@ -37,6 +38,8 @@
         return_content: yes
       register: teleporter_data
       ignore_errors: yes
+      check_mode: no
+      changed_when: false
 
     - name: Vérification de la récupération des données
       fail:
@@ -63,6 +66,7 @@
         status_code: [200, 201]
       register: auth_pihole_slave_1
       ignore_errors: yes
+      check_mode: no
 
     - name: Debug réponse brute Auth PiHole Slave 1
       debug:
@@ -85,6 +89,7 @@
         return_content: yes
       register: upload_result
       ignore_errors: yes
+      check_mode: no
 
     - name: Vérification de l'envoi des données
       fail:
