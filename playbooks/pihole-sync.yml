@@ -77,25 +77,25 @@
         msg: "Authentification échouée. Réponse API: {{ auth_pihole_slave_1 }}"
       when: auth_pihole_slave_1.failed or auth_pihole_slave_1.json is not defined or auth_pihole_slave_1.json.session is not defined or 'sid' not in auth_pihole_slave_1.json.session
 
-    - name: Envoi du fichier vers PiHole Slave 1
-      uri:
-        url: "{{ pihole_slave_1 }}/api/teleporter"
-        method: POST
-        headers:
-          accept: "application/json"
-          sid: "{{ auth_pihole_slave_1.json.session.sid }}"
-        body_format: form-multipart
-        src: "/tmp/teleporter.zip"
-        return_content: yes
-      register: upload_result
-      ignore_errors: yes
-      check_mode: no
+    # - name: Envoi du fichier vers PiHole Slave 1
+    #   uri:
+    #     url: "{{ pihole_slave_1 }}/api/teleporter"
+    #     method: POST
+    #     headers:
+    #       accept: "application/json"
+    #       sid: "{{ auth_pihole_slave_1.json.session.sid }}"
+    #     body_format: form-multipart
+    #     src: "/tmp/teleporter.zip"
+    #     return_content: yes
+    #   register: upload_result
+    #   ignore_errors: yes
+    #   check_mode: no
 
-    - name: Vérification de l'envoi des données
-      fail:
-        msg: "Échec de l'envoi. Réponse API: {{ upload_result }}"
-      when: upload_result.failed
+    # - name: Vérification de l'envoi des données
+    #   fail:
+    #     msg: "Échec de l'envoi. Réponse API: {{ upload_result }}"
+    #   when: upload_result.failed
 
-    - name: Afficher le résultat de l'envoi
-      debug:
-        var: upload_result
+    # - name: Afficher le résultat de l'envoi
+    #   debug:
+    #     var: upload_result
