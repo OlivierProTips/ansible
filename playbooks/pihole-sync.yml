@@ -1,0 +1,62 @@
+---
+- name: Transférer les données entre deux Pi-hole
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Authentification sur PiHole Master
+      uri:
+        url: "{{ pihole_master }}/api/auth"
+        method: POST
+        headers:
+          accept: "application/json"
+          content-type: "application/json"
+        body_format: json
+        body:
+          password: "{{ pihole_master_password }}"
+        return_content: yes
+      register: auth_pihole_master
+
+    - name: Récupération des données depuis PiHole Master
+      uri:
+        url: "{{ pihole_master }}/api/teleporter"
+        method: GET
+        headers:
+          accept: "application/zip"
+          sid: "{{ auth_pihole_master.json.sid }}"
+        return_content: yes
+      register: teleporter_data
+
+    - name: Sauvegarde du fichier téléchargé
+      copy:
+        content: "{{ teleporter_data.content }}"
+        dest: "/tmp/teleporter.zip"
+        mode: '0644'
+
+    - name: Authentification sur PiHole Slave 1
+      uri:
+        url: "{{ pihole_slave_1 }}/api/auth"
+        method: POST
+        headers:
+          accept: "application/json"
+          content-type: "application/json"
+        body_format: json
+        body:
+          password: "{{ pihole_slave_1_password }}"
+        return_content: yes
+      register: auth_pihole_slave_1
+
+    - name: Envoi du fichier vers PiHole Slave 1
+      uri:
+        url: "{{ pihole_slave_1 }}/api/teleporter"
+        method: POST
+        headers:
+          accept: "application/json"
+          sid: "{{ auth_pihole_slave_1.json.sid }}"
+        body_format: form-multipart
+        src: "/tmp/teleporter.zip"
+        return_content: yes
+      register: upload_result
+
+    - name: Afficher le résultat de l'envoi
+      debug:
+        var: upload_result
