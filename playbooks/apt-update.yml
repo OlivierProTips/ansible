@@ -1,6 +1,6 @@
 ---
 # 0 5 * * *
-- hosts: plex-nuc
+- hosts: all
 
   become: true
   tasks:
