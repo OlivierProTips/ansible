@@ -7,6 +7,12 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
+  pre_tasks:
+    - name: Fail if not Debian 12 bookworm
+      ansible.builtin.fail:
+        msg: "This playbook only supports Debian 12 (bookworm)."
+      when: "'VERSION_CODENAME=bookworm' not in lookup('file', '/etc/os-release') or 'VERSION_ID=\"12\"' not in lookup('file', '/etc/os-release')"
+
   tasks:
     - name: Update & upgrade system (initial)
       ansible.builtin.apt:
