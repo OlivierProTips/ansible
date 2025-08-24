@@ -1,0 +1,79 @@
+---
+- name: Full Debian upgrade with safe reboot and post-cleaning
+  hosts: all
+  become: yes
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - name: Update & upgrade system (initial)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+        autoremove: yes
+        force_apt_get: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Replace "bookworm" with "trixie" in /etc/apt/sources.list
+      ansible.builtin.replace:
+        path: /etc/apt/sources.list
+        regexp: 'bookworm'
+        replace: 'trixie'
+
+    - name: Replace "bookworm" with "trixie" in /etc/apt/sources.list.d/*.list
+      ansible.builtin.replace:
+        path: "{{ item }}"
+        regexp: 'bookworm'
+        replace: 'trixie'
+      with_fileglob:
+        - "/etc/apt/sources.list.d/*.list"
+      ignore_errors: yes
+
+    - name: Update & upgrade system (after sources update)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+        autoremove: yes
+        force_apt_get: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Safe reboot of the server
+      ansible.builtin.reboot:
+        reboot_timeout: 600
+        test_command: whoami
+        pre_reboot_delay: 5
+        post_reboot_delay: 10
+
+    - name: Autoremove unnecessary packages
+      ansible.builtin.apt:
+        autoremove: yes
+        purge: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Purge orphaned packages
+      ansible.builtin.shell: >
+        apt purge '~o' -y
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      register: purge_orphans
+      failed_when: false
+      changed_when: purge_orphans.rc == 0
+
+    - name: Clean local repository of retrieved package files
+      ansible.builtin.apt:
+        autoclean: yes
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Modernize sources (if command exists)
+      ansible.builtin.shell: >
+        apt modernize-sources -y
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      register: modernize
+      failed_when: false
+      changed_when: modernize.rc == 0
