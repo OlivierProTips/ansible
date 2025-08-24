@@ -1,4 +1,5 @@
 ---
+# ansible-playbook -i hosts.ini -k -K bookworm2trixie.yml
 - name: Full Debian upgrade with safe reboot and post-cleaning
   hosts: all
   become: yes
